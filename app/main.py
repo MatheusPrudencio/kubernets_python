@@ -1,6 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
+
+from app.views import paciente_router
 
 app = FastAPI()
+router = APIRouter()
 
 @app.get("/")
 def home():
@@ -9,3 +12,6 @@ def home():
 @app.get("/test/{i}")
 def test(i: int):
     return {"numero": i}
+
+app.include_router(prefix="/", router=router)
+app.include_router(paciente_router)
